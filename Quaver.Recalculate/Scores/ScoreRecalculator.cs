@@ -106,7 +106,7 @@ namespace Quaver.Recalculate.Scores
                     {
                         done++;
                         Console.WriteLine($"{GetProgress(done, scores)} Unable to fetch map file: {score.MapId}.qua");
-                        return;
+                        continue;
                     }
                 
                     var difficulty = map.SolveDifficulty(score.Mods);
