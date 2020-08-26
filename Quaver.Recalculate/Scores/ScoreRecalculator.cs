@@ -7,6 +7,7 @@ using Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys;
 using Quaver.API.Maps.Processors.Rating;
 using Quaver.Recalculate.Config;
 using Quaver.Recalculate.Database;
+using Quaver.Recalculate.Maps;
 using SimpleLogger;
 
 namespace Quaver.Recalculate.Scores
@@ -21,7 +22,8 @@ namespace Quaver.Recalculate.Scores
             Logger.Log(Logger.Level.Info, $"Starting score recalculator task...");
             Logger.Log(Logger.Level.Info, $"Difficulty Processor Version: `{DifficultyProcessorKeys.Version}`");
             Logger.Log(Logger.Level.Info, $"Performance Rating Processor Version: `{RatingProcessorKeys.Version}`");
-            
+
+            MapCache.DownloadAllMaps();
             RetrieveOutdatedScores();
         }
 
@@ -92,7 +94,26 @@ namespace Quaver.Recalculate.Scores
         /// <returns></returns>
         private static async Task RecalculateScores(MySqlConnection conn, List<Score> scores)
         {
-            Console.WriteLine("Starting recalc");
+            var done = 0;
+            
+            Parallel.ForEach(scores, async score =>
+            {
+                var map = MapCache.Fetch(score.MapId);
+
+                if (map == null)
+                {
+                    done++;
+
+                    var progress = $"[{done}/{scores.Count} - {done / (float) scores.Count * 100f:0.00}%]";
+                    Console.WriteLine($"{progress} Unable to fetch map file: {score.MapId}.qua");
+                    return;
+                }
+                
+                done++;
+                
+                var progress2 = $"[{done}/{scores.Count} - {done / (float) scores.Count * 100f:0.00}%]";
+                Console.WriteLine($"{progress2}");
+            });
         }
     }
 }
