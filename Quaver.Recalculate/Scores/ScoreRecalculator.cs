@@ -95,25 +95,51 @@ namespace Quaver.Recalculate.Scores
         private static async Task RecalculateScores(MySqlConnection conn, List<Score> scores)
         {
             var done = 0;
-            
-            Parallel.ForEach(scores, async score =>
+
+            foreach (var score in scores)
             {
-                var map = MapCache.Fetch(score.MapId);
-
-                if (map == null)
+                try
                 {
-                    done++;
+                    var map = MapCache.Fetch(score.MapId);
 
-                    var progress = $"[{done}/{scores.Count} - {done / (float) scores.Count * 100f:0.00}%]";
-                    Console.WriteLine($"{progress} Unable to fetch map file: {score.MapId}.qua");
-                    return;
+                    if (map == null)
+                    {
+                        done++;
+                        Console.WriteLine($"{GetProgress(done, scores)} Unable to fetch map file: {score.MapId}.qua");
+                        return;
+                    }
+                
+                    var difficulty = map.SolveDifficulty(score.Mods);
+                    var rating = new RatingProcessorKeys(difficulty.OverallDifficulty).CalculateRating(score.Accuracy);
+                
+                    var cmd = new MySqlCommand()
+                    {
+                        Connection = conn,
+                        CommandText = $"UPDATE scores SET performance_rating = @pr, performance_processor_version = @pv, " +
+                                      $"difficulty_processor_version = @d WHERE id = @id"
+                    };
+
+                    await cmd.PrepareAsync();
+                    cmd.Parameters.AddWithValue("pr", rating);
+                    cmd.Parameters.AddWithValue("pv", RatingProcessorKeys.Version);
+                    cmd.Parameters.AddWithValue("d", DifficultyProcessorKeys.Version);
+                    cmd.Parameters.AddWithValue("id", score.Id);
+
+                    await cmd.ExecuteNonQueryAsync();
+
+                    done++;
+                    
+                    Console.WriteLine($"{GetProgress(done, scores)} Score Id: {score.Id} | Perf. Rating: {rating:0.00} " +
+                                      $"| Difficulty: {difficulty.OverallDifficulty:0.00}");
                 }
-                
-                done++;
-                
-                var progress2 = $"[{done}/{scores.Count} - {done / (float) scores.Count * 100f:0.00}%]";
-                Console.WriteLine($"{progress2}");
-            });
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
         }
+        
+        private static string GetProgress(int done, List<Score> scores) 
+            => $"[{done}/{scores.Count} - {done / (float) scores.Count * 100f:0.00}%]";
     }
 }
