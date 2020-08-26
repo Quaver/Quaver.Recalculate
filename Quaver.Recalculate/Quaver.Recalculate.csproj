@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Quaver.API\Quaver.API\Quaver.API.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="DotNetEnv" Version="1.4.0" />
+      <PackageReference Include="MySqlConnector" Version="1.0.1" />
+      <PackageReference Include="SimpleLogger" Version="1.0.0" />
+    </ItemGroup>
+
+</Project>

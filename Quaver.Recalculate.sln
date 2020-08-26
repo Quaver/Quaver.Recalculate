@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quaver.Recalculate", "Quaver.Recalculate\Quaver.Recalculate.csproj", "{5BE91A0D-3514-43B4-B31D-7D7A69053F92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quaver.API", "Quaver.API\Quaver.API\Quaver.API.csproj", "{B5D8B1E4-DD08-4576-BD7A-D0EC7D8B467C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5BE91A0D-3514-43B4-B31D-7D7A69053F92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BE91A0D-3514-43B4-B31D-7D7A69053F92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BE91A0D-3514-43B4-B31D-7D7A69053F92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BE91A0D-3514-43B4-B31D-7D7A69053F92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5D8B1E4-DD08-4576-BD7A-D0EC7D8B467C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5D8B1E4-DD08-4576-BD7A-D0EC7D8B467C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5D8B1E4-DD08-4576-BD7A-D0EC7D8B467C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5D8B1E4-DD08-4576-BD7A-D0EC7D8B467C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
