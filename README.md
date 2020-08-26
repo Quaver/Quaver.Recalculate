@@ -1,4 +1,4 @@
-# Quaver.Recalculate
+# Quaver.Recalculate [![Discord](https://discordapp.com/api/guilds/354206121386573824/widget.png?style=shield)](https://discord.gg/nJa8VFr)
 📏 A tool used for difficulty and performance rating recalculations in Quaver.
 
 Developed for internal purposes. No support or documentation is provided.
