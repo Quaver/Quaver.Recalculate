@@ -16,7 +16,7 @@ namespace Quaver.Recalculate.Database
             ConnString = $"Server={Configuration.Instance.SQLHost};" +
                          $"User ID={Configuration.Instance.SQLUsername};" +
                          $"Password={Configuration.Instance.SQLPassword};" +
-                         $"Database={Configuration.Instance.SQLDatabase};";            
+                         $"Database={Configuration.Instance.SQLDatabase}";            
         }
     }
 }
