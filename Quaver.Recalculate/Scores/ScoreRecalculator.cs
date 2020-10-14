@@ -49,7 +49,7 @@ namespace Quaver.Recalculate.Scores
                         CommandText = $"SELECT s.id, s.mods, s.accuracy, m.id AS map_id " +
                                       $"FROM scores s " + 
                                       $"INNER JOIN maps m ON m.md5 = s.map_md5 " + 
-                                      $"WHERE personal_best = 1 AND failed = 0 " +
+                                      $"WHERE failed = 0 " +
                                       $"AND (difficulty_processor_version IS NULL OR difficulty_processor_version <> @d " +
                                             $"OR performance_processor_version IS NULL OR performance_processor_version <> @p)"
                     };
