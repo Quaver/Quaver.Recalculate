@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using Quaver.Recalculate.Config;
 using Quaver.Recalculate.Tasks;
 using SimpleLogger;
@@ -13,6 +14,7 @@ namespace Quaver.Recalculate
         /// </summary>
         internal static void Main()
         {
+            ServicePointManager.DefaultConnectionLimit = 100;
             InitializeLogger();
             Configuration.Load();
             ScoreRecalculator.Run();
