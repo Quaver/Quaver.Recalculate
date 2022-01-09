@@ -1,5 +1,5 @@
 ﻿using System;
-using Quaver.Recalculate.Scores;
+using Quaver.Recalculate.Config;
 using SimpleLogger;
 using SimpleLogger.Logging.Handlers;
 
@@ -10,11 +10,10 @@ namespace Quaver.Recalculate
         /// <summary>
         ///     Main Execution
         /// </summary>
-        /// <param name="args"></param>
-        internal static void Main(string[] args)
+        internal static void Main()
         {
             InitializeLogger();
-            ScoreRecalculator.Run();
+            Configuration.Load();
         }
 
         /// <summary>
