@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using SimpleLogger;
 
 namespace Quaver.Recalculate.Config
@@ -10,13 +11,13 @@ namespace Quaver.Recalculate.Config
         /// </summary>
         public static Configuration Instance { get; private set; }
         
-        public string SQLHost { get; }
+        public string SqlHost { get; }
         
-        public string SQLUsername { get; }
+        public string SqlUsername { get; }
         
-        public string SQLPassword { get; }
+        public string SqlPassword { get; }
         
-        public string SQLDatabase { get; }
+        public string SqlDatabase { get; }
 
         /// <summary>
         ///     The path of the config file.
@@ -27,26 +28,29 @@ namespace Quaver.Recalculate.Config
         /// </summary>
         public Configuration()
         {
-            try
-            {
-                DotNetEnv.Env.Load(ConfigPath);
+            if (Instance != null)
+                return;
+            
+            Logger.Log($"Loading config at path: `{ConfigPath}`...");
 
-                SQLHost = DotNetEnv.Env.GetString("SQLHost");
-                SQLUsername = DotNetEnv.Env.GetString("SQLUsername");
-                SQLPassword = DotNetEnv.Env.GetString("SQLPassword");
-                SQLDatabase = DotNetEnv.Env.GetString("SQLDatabase");
-            }
-            catch (Exception e)
+            if (!File.Exists(ConfigPath))
             {
-                Logger.Log(e);
+                Logger.Log(Logger.Level.Error, $"No config file found at path: `{ConfigPath}`");
                 Environment.Exit(-1);
+                return;
             }
+                
+            DotNetEnv.Env.Load(ConfigPath);
 
-            Logger.Log(Logger.Level.Fine, $"Config file has successfully loaded!");
+            SqlHost = DotNetEnv.Env.GetString("SQLHost");
+            SqlUsername = DotNetEnv.Env.GetString("SQLUsername");
+            SqlPassword = DotNetEnv.Env.GetString("SQLPassword");
+            SqlDatabase = DotNetEnv.Env.GetString("SQLDatabase");
             Instance = this;
+            
+            Logger.Log($"Successfully loaded config file!");
         }
-
-        // ReSharper disable once ObjectCreationAsStatement
-        public static void Load() => new Configuration();
+        
+        public static Configuration Load() => new Configuration();
     }
 }
