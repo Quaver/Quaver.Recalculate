@@ -1,4 +1,5 @@
-﻿using Quaver.Recalculate.Config;
+﻿using MySqlConnector;
+using Quaver.Recalculate.Config;
 
 namespace Quaver.Recalculate.Database
 {
@@ -6,10 +7,16 @@ namespace Quaver.Recalculate.Database
     {
         public static string GetConnString(Configuration config)
         {
-            return $"Server={config.SqlHost};" +
-                   $"User ID={config.SqlUsername};" +
-                   $"Password={config.SqlPassword};" +
-                   $"Database={config.SqlDatabase}";       
+            var builder = new MySqlConnectionStringBuilder
+            {
+                Server = config.SqlHost,
+                Port = 3306,
+                UserID = config.SqlUsername,
+                Password = config.SqlPassword,
+                Database = config.SqlDatabase
+            };
+
+            return builder.ConnectionString;
         }
     }
 }
