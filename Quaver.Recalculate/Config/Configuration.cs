@@ -19,6 +19,9 @@ namespace Quaver.Recalculate.Config
         
         public string SqlDatabase { get; }
 
+        public string APIUrl { get; }
+        
+
         /// <summary>
         ///     The path of the config file.
         /// </summary>
@@ -46,6 +49,8 @@ namespace Quaver.Recalculate.Config
             SqlUsername = DotNetEnv.Env.GetString("SQLUsername");
             SqlPassword = DotNetEnv.Env.GetString("SQLPassword");
             SqlDatabase = DotNetEnv.Env.GetString("SQLDatabase");
+            APIUrl = DotNetEnv.Env.GetString("APIUrl");
+            
             Instance = this;
             
             Logger.Log($"Successfully loaded config file!");

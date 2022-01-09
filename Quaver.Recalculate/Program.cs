@@ -1,5 +1,6 @@
 ﻿using System;
 using Quaver.Recalculate.Config;
+using Quaver.Recalculate.Tasks;
 using SimpleLogger;
 using SimpleLogger.Logging.Handlers;
 
@@ -14,6 +15,7 @@ namespace Quaver.Recalculate
         {
             InitializeLogger();
             Configuration.Load();
+            ScoreRecalculator.Run();
         }
 
         /// <summary>
@@ -21,8 +23,7 @@ namespace Quaver.Recalculate
         private static void InitializeLogger()
         {
             Logger.LoggerHandlerManager
-                .AddHandler(new ConsoleLoggerHandler())
-                .AddHandler(new FileLoggerHandler());
+                .AddHandler(new ConsoleLoggerHandler());
         }
     }
 }
