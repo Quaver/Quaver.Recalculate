@@ -14,7 +14,7 @@ namespace Quaver.Recalculate.Tasks
         public static void Run()
         {
             var maps = GetMapIds();
-            Parallel.ForEach(maps, RecalculateMap);
+            maps.ForEach(RecalculateMap);
         }
 
         private static List<int> GetMapIds()
