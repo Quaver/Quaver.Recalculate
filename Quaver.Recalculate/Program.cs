@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using Quaver.Recalculate.Config;
 using Quaver.Recalculate.Tasks;
 using SimpleLogger;
@@ -18,7 +19,8 @@ namespace Quaver.Recalculate
                 Console.WriteLine($"Please provide a task to run: `scores`, `maps`");
                 return;
             }
-
+            
+            ServicePointManager.DefaultConnectionLimit = 100;
             InitializeLogger();
             Configuration.Load();
 
