@@ -11,11 +11,26 @@ namespace Quaver.Recalculate
         /// <summary>
         ///     Main Execution
         /// </summary>
-        internal static void Main()
+        internal static void Main(string[] args)
         {
+            if (args.Length == 0)
+            {
+                Console.WriteLine($"Please provide a task to run: `scores`, `maps`");
+                return;
+            }
+
             InitializeLogger();
             Configuration.Load();
-            ScoreRecalculator.Run();
+
+            switch (args[0].ToLower())
+            {
+                case "scores":
+                    ScoreRecalculator.Run();
+                    break;
+                case "maps":
+                    MapRecalculator.Run();
+                    break;
+            }
         }
 
         /// <summary>
